@@ -1,0 +1,30 @@
+<!-- templates/message_form.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Message</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-12">
+      <h1 class="text-3xl font-bold mb-6">Submit a message</h1>
+      <form method="post" action="{{ url_for('store_message') }}" class="bg-white p-8 rounded shadow-lg">
+        <div class="mb-4">
+          <label for="banned_reason" class="block mb-2">Banned Reason:</label>
+          <input type="text" id="banned_reason" name="banned_reason" class="w-full p-2 border border-gray-300 rounded" required>
+        </div>
+        <div class="mb-4">
+          <label for="unban_reason" class="block mb-2">Reason to be Unbanned:</label>
+          <input type="text" id="unban_reason" name="unban_reason" class="w-full p-2 border border-gray-300 rounded" required>
+        </div>
+        <div class="mb-4">
+          <label for="video_link" class="block mb-2">YouTube Video Link (optional, with timestamp):</label>
+          <input type="url" id="video_link" name="video_link" class="w-full p-2 border border-gray-300 rounded">
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

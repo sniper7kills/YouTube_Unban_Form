@@ -1,0 +1,50 @@
+<!-- templates/review_request.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Unban Request</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-12">
+      <h1 class="text-3xl font-bold mb-6">Review Unban Request</h1>
+      <div class="bg-white p-8 rounded shadow-lg">
+        <p><strong>Channel ID:</strong> {{ channel_id }}</p>
+        <p><strong>Banned Reason:</strong> {{ banned_reason }}</p>
+        <p><strong>Unban Reason:</strong> {{ unban_reason }}</p>
+
+        {% if video_link %}
+        {% set video_id, timestamp = video_link|youtube_video_id %}
+        <p><strong>Video:</strong></p>
+        <button id="toggleVideoBtn" class="bg-blue-500 text-white px-4 py-2 rounded mb-2">Hide Video</button>
+        <div id="videoContainer" class="relative" style="padding-bottom: 56.25%; padding-top: 30px;">
+            <iframe src="https://www.youtube.com/embed/{{ video_id }}{% if timestamp %}?start={{ timestamp }}{% endif %}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+        </div>
+        {% endif %}
+        
+
+        <form method="post" action="{{ url_for('review_request') }}" class="mt-4">
+            <button type="submit" name="action" value="accept" class="bg-green-500 text-white px-4 py-2 rounded mr-4">Accept</button>
+            <button type="submit" name="action" value="reject" class="bg-red-500 text-white px-4 py-2 rounded mr-4">Reject</button>
+            <button type="submit" name="action" value="skip" class="bg-blue-500 text-white px-4 py-2 rounded">Skip</button>          
+        </form>
+      </div>
+    </div>
+    <script>
+        document.getElementById('toggleVideoBtn').addEventListener('click', function() {
+        const videoContainer = document.getElementById('videoContainer');
+        const toggleVideoBtn = document.getElementById('toggleVideoBtn');
+        
+        if (videoContainer.style.display === 'none') {
+            videoContainer.style.display = 'block';
+            toggleVideoBtn.textContent = 'Hide Video';
+        } else {
+            videoContainer.style.display = 'none';
+            toggleVideoBtn.textContent = 'Show Video';
+        }
+        });
+    </script>
+  </body>
+</html>
